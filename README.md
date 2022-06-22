@@ -1,2 +1,3 @@
-# playground-spring
-Sample Spring Boot service to try features
+# Playground Spring
+
+Sample service to test Spring features.
