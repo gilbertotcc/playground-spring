@@ -1,0 +1,53 @@
+openapi: 3.0.3
+
+info:
+  title: Puppet
+  description: Sample service to test Spring features
+  version: '1.0'
+  contact:
+    name: Gilberto Taccari
+    email: gilberto.taccari@gmail.com
+
+servers:
+  - url: ''
+
+tags:
+  - name: Service
+    description: Service operations
+
+paths:
+  /healthcheck:
+    get:
+      summary: Get healthcheck
+      description: Return the status of the service
+      operationId: getHealthcheck
+      tags: [ Service ]
+      responses:
+        '200':
+          description: Service up and running
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+        '503':
+          description: Service isn't properly working
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+
+components:
+  schemas:
+    HealthCheckResponse:
+      type: object
+      properties:
+        code:
+          description: Code describing the healthiness of the service
+          type: string
+          enum:
+            - HEALTHY
+            - UNHEALTHY
+        message:
+          description: Human-readable description of the health status
+          type: string
+          example: 'Service available'
