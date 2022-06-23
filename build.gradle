@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.7.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+  id 'jacoco'
+  id 'checkstyle'
   id 'org.openapi.generator' version '6.0.0'
 }
 
@@ -14,7 +16,8 @@ repositories {
 }
 
 ext.versions = [
-  jacksonDatabindNullableVersion: "0.2.2"
+  jacksonDatabindNullableVersion: "0.2.2",
+  checkstyleVersion: "8.39"
 ]
 
 dependencies {
@@ -28,12 +31,18 @@ dependencies {
   testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
+sourceSets {
+  main.java.srcDirs += "src/gen/java"
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
+  jacoco {
+    destinationFile = file("$buildDir/jacoco/${name}.exec")
+  }
 }
 
 // OPENAPI GENERATOR
-
 compileJava.dependsOn tasks.openApiGenerate
 
 openApiGenerate {
@@ -55,6 +64,38 @@ openApiGenerate {
   ]
 }
 
-sourceSets {
-  main.java.srcDirs += "src/gen/java"
+// JACOCO
+
+jacoco {
+  toolVersion = '0.8.7'
 }
+tasks.withType(Test) {
+  finalizedBy jacocoTestReport
+}
+
+ext {
+  jacocoMergedReport = file("$buildDir/jacoco/mergeTest.exec")
+}
+
+task jacocoMergeTestReport(type: JacocoMerge) {
+  executionData tasks.withType(Test)
+  destinationFile = jacocoMergedReport
+}
+
+jacocoTestReport {
+  dependsOn jacocoMergeTestReport
+  executionData jacocoMergedReport
+  reports {
+    xml.enabled true
+    csv.enabled false
+    html.enabled true
+    html.destination file("${buildDir}/reports/jacocoHtml")
+  }
+}
+
+// CHECKSTYLE
+checkstyle {
+  toolVersion = "${versions.checkstyleVersion}"
+}
+checkstyleMain.source = "src/main/java"
+checkstyleTest.source = "src/test/java"
