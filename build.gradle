@@ -39,7 +39,7 @@ compileJava.dependsOn tasks.openApiGenerate
 openApiGenerate {
   generatorName = "spring"
   inputSpec = "$rootDir/src/main/resources/openapi/openapi.yaml".toString()
-  outputDir = "$buildDir/generated".toString()
+  outputDir = "$rootDir/src/gen/java".toString()
   apiPackage = "it.tccr.puppet.api"
   modelPackage = "it.tccr.puppet.api.model"
   generateApiDocumentation = false
@@ -49,10 +49,11 @@ openApiGenerate {
     documentationProvider: "none",
     interfaceOnly: "true",
     useOptional: "true",
-    useBeanValidation: "false"
+    useBeanValidation: "false",
+    sourceFolder: ""
   ]
 }
 
 sourceSets {
-  main.java.srcDirs += "$buildDir/generated/src/main/java"
+  main.java.srcDirs += "src/gen/java"
 }
