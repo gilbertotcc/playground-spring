@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-06-23T02:12:03.364341+02:00[Europe/Rome]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
 public interface HealthcheckApi {
 
     default Optional<NativeWebRequest> getRequest() {

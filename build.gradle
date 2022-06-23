@@ -50,7 +50,8 @@ openApiGenerate {
     interfaceOnly: "true",
     useOptional: "true",
     useBeanValidation: "false",
-    sourceFolder: ""
+    sourceFolder: "",
+    hideGenerationTimestamp: "true"
   ]
 }
 
