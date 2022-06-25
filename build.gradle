@@ -1,3 +1,5 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
 plugins {
 	id 'org.springframework.boot' version '2.7.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -99,3 +101,22 @@ checkstyle {
 }
 checkstyleMain.source = "src/main/java"
 checkstyleTest.source = "src/test/java"
+
+// OPENAPI CLIENT GENERATOR
+task buildTypeScriptClient(type: GenerateTask){
+  generatorName = "typescript-axios"
+  inputSpec = "$rootDir/src/main/resources/openapi/openapi.yaml".toString()
+  outputDir = "$buildDir/client/typescript-axios".toString()
+  generateApiTests = false
+  generateModelTests = false
+}
+
+task buildPythonClient(type: GenerateTask){
+  generatorName = "python"
+  inputSpec = "$rootDir/src/main/resources/openapi/openapi.yaml".toString()
+  outputDir = "$buildDir/client/python".toString()
+  generateApiTests = false
+  generateModelTests = false
+}
+
+task buildClients(dependsOn: ['buildTypeScriptClient', 'buildPythonClient'])
