@@ -11,7 +11,7 @@ Sample service to test Spring features.
   For generator options see pages
   [Documentation for the python Generator](https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/python.md)
   and
-  [Documentation for the typescript-axios Generator](https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/typescript-axios.md)
+  [Documentation for the typescript-axios Generator](https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/typescript-axios.md).
 - Implement *API first* approach using
   [OpenAPI Generator Gradle Plugin](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-gradle-plugin/README.adoc).
   The plugin generates Java interfaces that represent the API and classes to
