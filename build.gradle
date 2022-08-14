@@ -34,7 +34,6 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testAnnotationProcessor 'org.projectlombok:lombok'
   // LOGGING
-  implementation "com.github.maricn:logback-slack-appender:${versions.logbackSlackAppenderVersion}"
 }
 
 sourceSets {
