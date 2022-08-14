@@ -12,10 +12,50 @@ servers:
   - url: ''
 
 tags:
+  - name: Connections
+    description: Account connections operations
+  - name: Callback
+    description: Callback operations to notify account connection updates
   - name: Service
-    description: Service operations
+    description: Service operations operations
 
 paths:
+  /account-connections:
+    post:
+      summary: Initialize connection
+      description: Initialize a new account connection through tink.
+      operationId: initializeConnection
+      tags: [ Connections ]
+      responses:
+        '201':
+          description: Connection successfully initialized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+  /account-connection-callback:
+    get:
+      summary: Notify that aggregation completed
+      description: |
+        Notify that an account aggregation completed on account aggregation provider side.
+      operationId: notifyAggregationCompleted
+      tags: [ Callback ]
+      parameters:
+        - name: code
+          in: query
+          example: '6a733cd00d7c49b9897ba1b6d00f819c'
+          required: true
+          schema:
+            type: string
+        - name: credentialsId
+          in: query
+          example: 'credentialsABC'
+          required: true
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Aggregation successfully completed
   /healthcheck:
     get:
       summary: Get healthcheck
@@ -38,6 +78,20 @@ paths:
 
 components:
   schemas:
+    Connection:
+      type: object
+      properties:
+        accountConnectionId:
+          description: Unique identifier of the connection
+          type: string
+          example: 'connection123'
+        connectionLink:
+          description: Link to connect the account
+          type: string
+          example: 'https://link.tink.com/1.0/transactions/connect-accounts/?client_id=123&redirect_uri=https%3A%2F%2Fconsole.tink.com%2Fcallback'
+      required:
+        - accountConnectionId
+        - connectionLink
     HealthCheckResponse:
       type: object
       properties:
