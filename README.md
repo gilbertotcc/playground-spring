@@ -12,6 +12,9 @@ Environment variables that SHOULD be configured.
 
 *In the following section the top activity is the latest one.*
 
+- Enable actuator endpoints exposed on port 8081.
+  Documentation on the actuators at
+- [Spring Boot Actuator Web API Documentation](https://docs.spring.io/spring-boot/docs/2.0.x/actuator-api/html/).
 - Add Gradle task `buildClients` to build Python and TypeScript HTTP clients.
   Sources are generated within the `build/client` folder.
   For generator options see pages
