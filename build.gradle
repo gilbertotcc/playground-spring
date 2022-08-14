@@ -48,6 +48,12 @@ tasks.named('test') {
 }
 
 // OPENAPI GENERATOR
+task cleanOpenApiGenerate(type: Delete, description: 'Deletes OpenAPI generated files') {
+  delete fileTree(dir: "$rootDir/src/gen/java".toString(), exclude: "**/.openapi-generator-ignore")
+}
+
+clean.dependsOn tasks.cleanOpenApiGenerate
+
 compileJava.dependsOn tasks.openApiGenerate
 
 openApiGenerate {
