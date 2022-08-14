@@ -21,7 +21,8 @@ repositories {
 ext.versions = [
   jacksonDatabindNullableVersion: "0.2.2",
   logbackSlackAppenderVersion   : "1.6.1",
-  checkstyleVersion             : "8.39"
+  checkstyleVersion             : "8.39",
+  vavrVersion                   : "0.10.4"
 ]
 
 dependencies {
@@ -29,6 +30,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
   implementation 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'
+  implementation "io.vavr:vavr:${versions.vavrVersion}"
   implementation "org.openapitools:jackson-databind-nullable:${versions.jacksonDatabindNullableVersion}"
   // TEST
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
