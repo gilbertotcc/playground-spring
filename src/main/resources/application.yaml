@@ -1,2 +1,8 @@
+account-aggregator:
+  tink:
+    base-url: ${TINK_BASE_URL:https://api.tink.com}
+    client-id: ${TINK_CLIENT_ID}
+    client_secret: ${TINK_CLIENT_SECRET}
+
 management.server.port: 8081
 management.endpoints.web.exposure.include: "*"
