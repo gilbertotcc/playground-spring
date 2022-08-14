@@ -1,0 +1,5 @@
+account-aggregator:
+  tink:
+    base-url: "https://api.tink.com"
+    client-id: "tinkClientId"
+    client_secret: "tinkClientSecret"
