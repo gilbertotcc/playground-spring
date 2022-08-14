@@ -6,17 +6,12 @@ Sample service to test Spring features.
 
 Environment variables that SHOULD be configured.
 
-- `SLACK_WEBHOOK_URL`, specify the URL of the Slack webhook used by Logback Slack
-  appender.
+...
 
 ## Changelog
 
 *In the following section the top activity is the latest one.*
 
-- Add Logback Slack appender
-  [`logback-slack-appender`](https://github.com/maricn/logback-slack-appender)
-  to append logs
-  on Slack through webhooks.
 - Add Gradle task `buildClients` to build Python and TypeScript HTTP clients.
   Sources are generated within the `build/client` folder.
   For generator options see pages
