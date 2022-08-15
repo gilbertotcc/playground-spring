@@ -1,5 +1,6 @@
 package it.tccr.puppet.api;
 
+import it.tccr.puppet.application.AccountConnectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,13 @@ import static org.springframework.http.HttpStatus.MOVED_PERMANENTLY;
 @RequiredArgsConstructor
 public class AccountConnectionCallbackController implements AccountConnectionCallbackApi {
 
+  private final AccountConnectionService accountConnectionService;
+
   private final NativeWebRequest request;
 
   @Override
   public ResponseEntity<Void> notifyAggregationCompleted(String code, String credentialsId) {
+    var accountConnection = accountConnectionService.connectAccounts(code);
     return ResponseEntity
       .status(MOVED_PERMANENTLY)
       .header(HttpHeaders.LOCATION, "https://console.tink.com/callback")
