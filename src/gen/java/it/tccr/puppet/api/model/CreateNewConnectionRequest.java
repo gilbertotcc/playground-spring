@@ -12,36 +12,16 @@ import java.util.*;
 import javax.annotation.Generated;
 
 /**
- * Connection
+ * CreateNewConnectionRequest
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
-public class Connection {
-
-  @JsonProperty("accountConnectionId")
-  private String accountConnectionId;
+public class CreateNewConnectionRequest {
 
   @JsonProperty("code")
   private String code;
 
-  public Connection accountConnectionId(String accountConnectionId) {
-    this.accountConnectionId = accountConnectionId;
-    return this;
-  }
-
-  /**
-   * Unique identifier of the connection
-   * @return accountConnectionId
-  */
-  public String getAccountConnectionId() {
-    return accountConnectionId;
-  }
-
-  public void setAccountConnectionId(String accountConnectionId) {
-    this.accountConnectionId = accountConnectionId;
-  }
-
-  public Connection code(String code) {
+  public CreateNewConnectionRequest code(String code) {
     this.code = code;
     return this;
   }
@@ -66,21 +46,19 @@ public class Connection {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Connection connection = (Connection) o;
-    return Objects.equals(this.accountConnectionId, connection.accountConnectionId) &&
-        Objects.equals(this.code, connection.code);
+    CreateNewConnectionRequest createNewConnectionRequest = (CreateNewConnectionRequest) o;
+    return Objects.equals(this.code, createNewConnectionRequest.code);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(accountConnectionId, code);
+    return Objects.hash(code);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Connection {\n");
-    sb.append("    accountConnectionId: ").append(toIndentedString(accountConnectionId)).append("\n");
+    sb.append("class CreateNewConnectionRequest {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("}");
     return sb.toString();
