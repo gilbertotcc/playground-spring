@@ -8,6 +8,7 @@ plugins {
   id 'checkstyle'
   id 'org.openapi.generator' version '6.0.0'
   id 'org.sonarqube' version '3.4.0.2513'
+  id 'idea'
 }
 
 group = 'it.tccr'
@@ -28,6 +29,7 @@ ext.versions = [
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.springframework.boot:spring-boot-starter-jetty'
   implementation 'org.springframework.boot:spring-boot-starter-webflux'
   implementation 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'
@@ -41,12 +43,50 @@ dependencies {
 
 sourceSets {
   main.java.srcDirs += "src/gen/java"
+  integrationTest {
+    compileClasspath += sourceSets.main.output
+    compileClasspath += sourceSets.test.output
+    runtimeClasspath += sourceSets.main.output
+    runtimeClasspath += sourceSets.test.output
+  }
+}
+
+configurations {
+  compileOnly {
+    extendsFrom annotationProcessor
+  }
+  integrationTestImplementation.extendsFrom testImplementation
+  integrationTestRuntimeOnly.extendsFrom runtimeOnly
+  implementation {
+    exclude module: 'spring-boot-starter-tomcat'
+  }
+}
+
+idea {
+  module {
+    testSourceDirs += project.sourceSets.integrationTest.java.srcDirs
+  }
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
   jacoco {
     destinationFile = file("$buildDir/jacoco/${name}.exec")
+  }
+}
+
+task integrationTest(type: Test, description: 'Runs integration tests.', group: LifecycleBasePlugin.VERIFICATION_GROUP) {
+  useJUnitPlatform()
+  testClassesDirs = sourceSets.integrationTest.output.classesDirs
+  classpath = sourceSets.integrationTest.runtimeClasspath
+  shouldRunAfter test
+  jacoco {
+    destinationFile = file("$buildDir/jacoco/integrationTest.exec")
+  }
+  testLogging {
+    events "failed"
+    exceptionFormat "full"
+    showStandardStreams = true
   }
 }
 
@@ -113,6 +153,7 @@ checkstyle {
 }
 checkstyleMain.source = "src/main/java"
 checkstyleTest.source = "src/test/java"
+checkstyleIntegrationTest.source = "src/integrationTest/java"
 
 // SONARCLOUD
 
