@@ -4,5 +4,5 @@ import reactor.core.publisher.Mono;
 
 public interface AccountConnectionClient {
 
-  Mono<String> exchangeCodeForAccessToken(String code);
+  Mono<String> exchangeCode(String code);
 }

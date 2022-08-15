@@ -12,14 +12,14 @@ import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
-public class TinkAccountConnectionClient implements AccountConnectionClient {
+public class TinkClient implements AccountConnectionClient {
 
   private final TinkConfig tinkConfig;
 
   private final WebClient webClient;
 
   @Override
-  public Mono<String> exchangeCodeForAccessToken(String code) {
+  public Mono<String> exchangeCode(String code) {
     MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
     formData.add("code", code);
     formData.add("client_id", tinkConfig.getClientId());
@@ -27,7 +27,7 @@ public class TinkAccountConnectionClient implements AccountConnectionClient {
     formData.add("grant_type", "authorization_code");
 
     return webClient.post()
-      .uri("https://api.tink.com/api/v1/oauth/token")
+      .uri(tinkConfig.getBaseUrl() + "/api/v1/oauth/token")
       .contentType(MediaType.APPLICATION_FORM_URLENCODED)
       .body(BodyInserters.fromFormData(formData))
       .exchangeToMono(response -> response.bodyToMono(AuthenticateResponse.class))

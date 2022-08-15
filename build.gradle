@@ -24,7 +24,9 @@ ext.versions = [
   jacksonDatabindNullableVersion: "0.2.2",
   logbackSlackAppenderVersion   : "1.6.1",
   checkstyleVersion             : "8.39",
-  vavrVersion                   : "0.10.4"
+  vavrVersion                   : "0.10.4",
+  okhttpVersion                 : "4.10.0",
+  mockWebServerVersion          : "4.10.0"
 ]
 
 dependencies {
@@ -39,7 +41,9 @@ dependencies {
   // TEST
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testAnnotationProcessor 'org.projectlombok:lombok'
-  // LOGGING
+  testImplementation "com.squareup.okhttp3:okhttp:${versions.okhttpVersion}"
+  testImplementation "com.squareup.okhttp3:mockwebserver:${versions.mockWebServerVersion}"
+  testImplementation "io.projectreactor:reactor-test"
 }
 
 sourceSets {

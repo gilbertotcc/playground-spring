@@ -14,7 +14,7 @@ public class AccountConnectionService {
   private final AccountConnectionClient accountConnectionClient;
 
   public AccountConnection connectAccounts(String code) {
-    var accessToken = accountConnectionClient.exchangeCodeForAccessToken(code).block();
+    var accessToken = accountConnectionClient.exchangeCode(code).block();
     return AccountConnection.builder()
       .accessToken(Option.some(accessToken))
       .build();
