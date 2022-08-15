@@ -18,7 +18,7 @@ import reactor.netty.transport.logging.AdvancedByteBufFormat;
 })
 @EnableAutoConfiguration
 @RequiredArgsConstructor
-public class TinkAccountConnectionClientConfiguration {
+public class TinkClientConfiguration {
 
   private final TinkConfig tinkConfig;
 
