@@ -32,3 +32,4 @@ jobs:
           file_types: .md
           print_all: false
           exclude_patterns: localhost
+          exclude_urls: https://api.tink.com

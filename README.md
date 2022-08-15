@@ -6,10 +6,11 @@ Sample service to test Spring features.
 
 Environment variables that SHOULD be configured.
 
-- `TINK_BASE_URL`. tink base URL. *(Default: https://api.tink.com)*
+- `TINK_BASE_URL`. tink base URL. *(Default: <https://api.tink.com>)*
 - `TINK_CLIENT_ID`. tink client id.
 - `TINK_CLIENT_SECRET`. tink client secret.
-- `TINK_REDIRECT_URI`.  URI to which redirect the user after account aggregation. 
+- `TINK_REDIRECT_URI`.  URI to which redirect the user after account
+  aggregation. 
 
 ...
 
