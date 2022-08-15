@@ -1,35 +1,44 @@
 package it.tccr.puppet.infrastructure;
 
 import it.tccr.puppet.application.AccountConnectionClient;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Component
+@RequiredArgsConstructor
 public class TinkAccountConnectionClient implements AccountConnectionClient {
 
-  private final String baseUrl;
-  private final String clientId;
-  private final String clientSecret;
-  private final RestTemplate restTemplate;
+  private final TinkConfig tinkConfig;
 
-  public TinkAccountConnectionClient(
-    @Value("${account-aggregator.tink.base-url}") String baseUrl,
-    @Value("${account-aggregator.tink.client-id}") String clientId,
-    @Value("${account-aggregator.tink.client-secret}") String clientSecret,
-    RestTemplate restTemplate
-  ) {
-    this.baseUrl = baseUrl;
-    this.clientId = clientId;
-    this.clientSecret = clientSecret;
-    this.restTemplate = restTemplate;
-  }
+  private final WebClient webClient;
 
   @Override
   public String getConnectionLink() {
     return "https://link.tink.com/1.0/transactions/connect-accounts?"
-      + "client_id=%s".formatted(clientId)
+      + "client_id=%s".formatted(tinkConfig.getClientId())
       + "&"
       + "redirect_uri=http://yourdomain.com/callback";
+  }
+
+  @Override
+  public Mono<String> exchangeCodeForAccessToken(String code) {
+    MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+    formData.add("code", code);
+    formData.add("client_id", tinkConfig.getClientId());
+    formData.add("client_secret", tinkConfig.getClientSecret());
+    formData.add("grant_type", "authorization_code");
+
+    return webClient.post()
+      .uri("https://api.tink.com/api/v1/oauth/token")
+      .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+      .body(BodyInserters.fromFormData(formData))
+      .exchangeToMono(response -> response.bodyToMono(AuthenticateResponse.class))
+      .map(authenticateResponse -> authenticateResponse.accessToken);
   }
 }
