@@ -11,5 +11,4 @@ public class TinkConfig {
   String baseUrl;
   String clientId;
   String clientSecret;
-  String redirectUri;
 }

@@ -19,14 +19,6 @@ public class TinkAccountConnectionClient implements AccountConnectionClient {
   private final WebClient webClient;
 
   @Override
-  public String getConnectionLink() {
-    return "https://link.tink.com/1.0/transactions/connect-accounts?"
-      + "client_id=%s".formatted(tinkConfig.getClientId())
-      + "&"
-      + "redirect_uri=http://yourdomain.com/callback";
-  }
-
-  @Override
   public Mono<String> exchangeCodeForAccessToken(String code) {
     MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
     formData.add("code", code);
