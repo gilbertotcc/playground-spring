@@ -6,6 +6,7 @@
 package it.tccr.puppet.api;
 
 import it.tccr.puppet.api.model.Connection;
+import it.tccr.puppet.api.model.CreateNewConnectionRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,23 +27,25 @@ public interface AccountConnectionsApi {
     }
 
     /**
-     * POST /account-connections : Initialize connection
-     * Initialize a new account connection through tink.
+     * POST /account-connections : Create new connection
+     * Create a new account connection given the tink &#x60;code&#x60; returned on completion of *tink one-time access* flow (see [One-time access to a bank account](https://docs.tink.com/resources/transactions/connect-to-a-bank-account)) and start fetching the accounts the user granted the access to. 
      *
-     * @return Connection successfully initialized (status code 201)
+     * @param createNewConnectionRequest Connection data (required)
+     * @return Connection successfully created (status code 201)
      */
     @RequestMapping(
         method = RequestMethod.POST,
         value = "/account-connections",
-        produces = { "application/json" }
+        produces = { "application/json" },
+        consumes = { "application/json" }
     )
-    default ResponseEntity<Connection> initializeConnection(
-        
+    default ResponseEntity<Connection> createNewConnection(
+         @RequestBody CreateNewConnectionRequest createNewConnectionRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"connectionLink\" : \"https://link.tink.com/1.0/transactions/connect-accounts/?client_id=123&redirect_uri=https%3A%2F%2Fconsole.tink.com%2Fcallback\", \"accountConnectionId\" : \"connection123\" }";
+                    String exampleString = "{ \"code\" : \"6a733cd00d7c49b9897ba1b6d00f819c\", \"accountConnectionId\" : \"account-connection-1\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

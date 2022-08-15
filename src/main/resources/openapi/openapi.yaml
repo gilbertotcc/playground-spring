@@ -14,48 +14,33 @@ servers:
 tags:
   - name: Connections
     description: Account connections operations
-  - name: Callback
-    description: Callback operations to notify account connection updates
   - name: Service
-    description: Service operations operations
+    description: Service operations
 
 paths:
   /account-connections:
     post:
-      summary: Initialize connection
-      description: Initialize a new account connection through tink.
-      operationId: initializeConnection
+      summary: Create new connection
+      description: |
+        Create a new account connection given the tink `code` returned on completion of *tink one-time access* flow (see
+        [One-time access to a bank account](https://docs.tink.com/resources/transactions/connect-to-a-bank-account)) and
+        start fetching the accounts the user granted the access to.
+      operationId: createNewConnection
       tags: [ Connections ]
+      requestBody:
+        description: Connection data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNewConnectionRequest'
+        required: true
       responses:
         '201':
-          description: Connection successfully initialized
+          description: Connection successfully created
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Connection'
-  /account-connection-callback:
-    get:
-      summary: Notify that aggregation completed
-      description: |
-        Notify that an account aggregation completed on account aggregation provider side.
-      operationId: notifyAggregationCompleted
-      tags: [ Callback ]
-      parameters:
-        - name: code
-          in: query
-          example: '6a733cd00d7c49b9897ba1b6d00f819c'
-          required: true
-          schema:
-            type: string
-        - name: credentialsId
-          in: query
-          example: 'credentialsABC'
-          required: true
-          schema:
-            type: string
-      responses:
-        '302':
-          description: Aggregation successfully completed
   /healthcheck:
     get:
       summary: Get healthcheck
@@ -78,20 +63,29 @@ paths:
 
 components:
   schemas:
+    CreateNewConnectionRequest:
+      type: object
+      properties:
+        code:
+          description: tink code returned by the access flow
+          type: string
+          example: '6a733cd00d7c49b9897ba1b6d00f819c'
+      required:
+        - code
     Connection:
       type: object
       properties:
         accountConnectionId:
           description: Unique identifier of the connection
           type: string
-          example: 'connection123'
-        connectionLink:
-          description: Link to connect the account
+          example: 'account-connection-1'
+        code:
+          description: tink code returned by the access flow
           type: string
-          example: 'https://link.tink.com/1.0/transactions/connect-accounts/?client_id=123&redirect_uri=https%3A%2F%2Fconsole.tink.com%2Fcallback'
+          example: '6a733cd00d7c49b9897ba1b6d00f819c'
       required:
         - accountConnectionId
-        - connectionLink
+        - code
     HealthCheckResponse:
       type: object
       properties:
