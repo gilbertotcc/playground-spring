@@ -3,7 +3,6 @@ account-aggregator:
     base-url: ${TINK_BASE_URL:https://api.tink.com}
     client-id: ${TINK_CLIENT_ID}
     client-secret: ${TINK_CLIENT_SECRET}
-    redirect-uri: ${TINK_REDIRECT_URI}
 
 management.server.port: 8081
 management.endpoints.web.exposure.include: "*"
