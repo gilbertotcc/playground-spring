@@ -129,21 +129,12 @@ openApiGenerate {
 // JACOCO
 
 jacoco {
-  toolVersion = '0.8.7'
-}
-
-ext {
-  jacocoMergedReport = file("$buildDir/jacoco/mergeTest.exec")
-}
-
-task jacocoMergeTestReport(type: JacocoMerge) {
-  executionData tasks.withType(Test)
-  destinationFile = jacocoMergedReport
+  toolVersion = '0.8.8'
 }
 
 jacocoTestReport {
-  dependsOn jacocoMergeTestReport
-  executionData jacocoMergedReport
+  dependsOn check
+  executionData fileTree(dir: "$rootDir/build".toString(), include: "**/jacoco/*.exec")
   reports {
     xml.enabled true
     csv.enabled false
