@@ -1,6 +1,3 @@
-it/tccr/puppet/api/AccountConnectionsApi.java
 it/tccr/puppet/api/ApiUtil.java
 it/tccr/puppet/api/HealthcheckApi.java
-it/tccr/puppet/api/model/Connection.java
-it/tccr/puppet/api/model/CreateNewConnectionRequest.java
 it/tccr/puppet/api/model/HealthCheckResponse.java

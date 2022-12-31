@@ -2,14 +2,6 @@
 
 Sample service to test Spring features.
 
-## Configuration
-
-Environment variables that SHOULD be configured.
-
-- `TINK_BASE_URL`. tink base URL. *(Default: <https://api.tink.com>)*
-- `TINK_CLIENT_ID`. tink client id.
-- `TINK_CLIENT_SECRET`. tink client secret.
-
 ## Changelog
 
 *In the following section the top activity is the latest one.*

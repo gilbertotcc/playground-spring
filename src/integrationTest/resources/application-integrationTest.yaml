@@ -1,5 +1,0 @@
-account-aggregator:
-  tink:
-    base-url: "http://localhost:9000"
-    client-id: "tinkClientIdIT"
-    client_secret: "tinkClientSecretIT"

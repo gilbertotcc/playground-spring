@@ -12,35 +12,10 @@ servers:
   - url: ''
 
 tags:
-  - name: Connections
-    description: Account connections operations
   - name: Service
     description: Service operations
 
 paths:
-  /account-connections:
-    post:
-      summary: Create new connection
-      description: |
-        Create a new account connection given the tink `code` returned on completion of *tink one-time access* flow (see
-        [One-time access to a bank account](https://docs.tink.com/resources/transactions/connect-to-a-bank-account)) and
-        start fetching the accounts the user granted the access to.
-      operationId: createNewConnection
-      tags: [ Connections ]
-      requestBody:
-        description: Connection data
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateNewConnectionRequest'
-        required: true
-      responses:
-        '201':
-          description: Connection successfully created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Connection'
   /healthcheck:
     get:
       summary: Get healthcheck
@@ -63,29 +38,6 @@ paths:
 
 components:
   schemas:
-    CreateNewConnectionRequest:
-      type: object
-      properties:
-        code:
-          description: tink code returned by the access flow
-          type: string
-          example: '6a733cd00d7c49b9897ba1b6d00f819c'
-      required:
-        - code
-    Connection:
-      type: object
-      properties:
-        accountConnectionId:
-          description: Unique identifier of the connection
-          type: string
-          example: 'account-connection-1'
-        code:
-          description: tink code returned by the access flow
-          type: string
-          example: '6a733cd00d7c49b9897ba1b6d00f819c'
-      required:
-        - accountConnectionId
-        - code
     HealthCheckResponse:
       type: object
       properties:
